@@ -2,9 +2,9 @@
 // @name         LETUS用チャットボット
 // @namespace    personal-letus-chatbot
 // @version      1.1.0
-// @updateURL    https://raw.githubusercontent.com/yuto0524999-sudo/letus-faq-chatbot/main/letus-chatbot.user.js
-// @downloadURL  https://raw.githubusercontent.com/yuto0524999-sudo/letus-faq-chatbot/main/letus-chatbot.user.js
-// @homepageURL  https://github.com/yuto0524999-sudo/letus-faq-chatbot
+// @updateURL    https://raw.githubusercontent.com/yuto0524999-sudo/letus-chatbot/main/letus-chatbot.user.js
+// @downloadURL  https://raw.githubusercontent.com/yuto0524999-sudo/letus-chatbot/main/letus-chatbot.user.js
+// @homepageURL  https://github.com/yuto0524999-sudo/letus-chatbot
 // @description  LETUS上に右下フロート型のFAQチャットボットを表示する個人用ユーザースクリプト。サーバー通信は一切なし、スクリプト内のFAQデータのみで動作します。
 // @author       you
 // @match        https://letus.ed.tus.ac.jp/*

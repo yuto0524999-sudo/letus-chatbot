@@ -15,7 +15,6 @@
 (function () {
   'use strict';
 
-  // 二重挿入防止（SPA的な遷移や再実行への対策）
   if (document.getElementById('tusLauncher')) return;
 
   // ============================================================
@@ -318,7 +317,6 @@
     hideBubble();
   });
 
-  // チャット画面の外側をクリックしたら閉じる
   document.addEventListener('mousedown', (e) => {
     const isOpen = widget.classList.contains('open');
     if(!isOpen) return;
@@ -535,9 +533,6 @@
   ];
 
   // ---- LETUSページ案内データ ----
-  // ※ url は実際のコースURL・セクションアンカーです。ページ構成が変わった場合は
-  //    LETUSで該当コースを開き、左のコースインデックスのセクション名を右クリック
-  //    →「リンクのアドレスをコピー」して更新してください。
   const PORTAL_URL = "https://letus.ed.tus.ac.jp";
 
   const NAVI_DATA = [
@@ -668,32 +663,14 @@
 
   sendBtn.addEventListener('click', sendMessage);
   input.addEventListener('keydown', e => { if(e.key === 'Enter') sendMessage(); });
-// ============================================================
-  //  4. 直近イベント連携 v2（カレンダーAPI版・未提出のみ表示）
-  //
-  //  【貼り付け場所】
-  //  前回貼り付けたアドオン（「4. 直近イベント連携（締切カウントダウン）アドオン」の
-  //  コメントから、その閉じ括弧 `})();` まで）を丸ごと削除し、
-  //  代わりにこのファイルの内容を同じ場所
-  //  （スクリプト全体の一番最後の `})();` の直前）に貼り付けてください。
-  //
-  //  【v1からの変更点】
-  //  ・LETUS(Moodle)内部のカレンダーAPIを使用
-  //    → どのページでも取得可能（トップページ以外でもOK）
-  //    → 提出済みの課題・受験済みの小テストは自動的に表示されない
-  //      （ダッシュボードの「タイムライン」と同じ仕組み）
-  //  ・表示する先の日数を LOOKAHEAD_DAYS で変更可能
-  //  ・APIが使えない場合は、v1と同じ「直近イベント」ブロックの
-  //    読み取りに自動フォールバック
+  // ============================================================
+  //  4. 直近イベント連携 
   // ============================================================
   (function initDeadlineNoticeV2(){
 
-    // ★ 何日先までの締切を表示するか（自由に変更してください）
     const LOOKAHEAD_DAYS = 14;
-    // ★ 各カテゴリの最大表示件数
     const MAX_ITEMS = 5;
 
-    // ---- アドオン用スタイル ----
     const evStyle = document.createElement('style');
     evStyle.textContent = `
 .tus-ev-alert{
@@ -723,13 +700,12 @@
     document.head.appendChild(evStyle);
 
     // ============================================================
-    //  A. カレンダーAPI（メインの取得方法）
+    //  A. カレンダーAPI
     // ============================================================
     function getSesskey(){
       try{
         if(window.M && window.M.cfg && window.M.cfg.sesskey) return window.M.cfg.sesskey;
       }catch(e){ /* noop */ }
-      // 予備: ページ内のリンク等からsesskeyを拾う
       const m = document.body.innerHTML.match(/sesskey=([A-Za-z0-9]{8,})/);
       return m ? m[1] : null;
     }
@@ -790,7 +766,7 @@
     }
 
     // ============================================================
-    //  B. 「直近イベント」ブロック読み取り（フォールバック）
+    //  B. 「直近イベント」ブロック読み取り
     // ============================================================
     function parseEventDate(text){
       const now = new Date();
